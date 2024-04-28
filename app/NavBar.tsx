@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import React from "react";
 import Logo from "@/public/logo.webp";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
