@@ -1,4 +1,3 @@
-import prisma from "@/prisma/client";
 import { Skeleton } from "@/app/components";
 import { Flex, Grid } from "@radix-ui/themes";
 import { Metadata } from "next";
