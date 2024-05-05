@@ -1,6 +1,13 @@
 "use client";
 import { Card } from "@radix-ui/themes";
-import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis } from "recharts";
+import {
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Cell,
+} from "recharts";
 
 interface Props {
   open: number;
@@ -14,6 +21,11 @@ const IssueChart = ({ open, inProgress, done }: Props) => {
     { label: "In Progress", value: inProgress },
     { label: "Done", value: done },
   ];
+  const colors: { [key: string]: string } = {
+    Open: "#fab2b1", // Red
+    "In Progress": "#f8fab1", // Yellow
+    Done: "#b1fac5", // Green
+  };
 
   return (
     <Card>
@@ -21,11 +33,11 @@ const IssueChart = ({ open, inProgress, done }: Props) => {
         <BarChart data={data}>
           <XAxis dataKey="label" />
           <YAxis />
-          <Bar
-            dataKey="value"
-            barSize={60}
-            style={{ fill: "var(--accent-7)" }}
-          />
+          <Bar dataKey="value" barSize={60}>
+            {data.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={colors[entry.label]} />
+            ))}
+          </Bar>
         </BarChart>
       </ResponsiveContainer>
     </Card>
