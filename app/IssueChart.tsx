@@ -22,9 +22,9 @@ const IssueChart = ({ open, inProgress, done }: Props) => {
     { label: "Done", value: done },
   ];
   const colors: { [key: string]: string } = {
-    Open: "#fab2b1", // Red
-    "In Progress": "#f8fab1", // Yellow
-    Done: "#b1fac5", // Green
+    Open: "#9f1239",
+    "In Progress": "#713f12",
+    Done: " #365314",
   };
 
   return (

@@ -1,10 +1,21 @@
 import prisma from "@/prisma/client";
-import Pagination from "./components/pagination";
-import IssueSummary from "./IssueSummary";
-import LatestIssues from "./LatestIssues";
-import IssueChart from "./IssueChart";
+import { Skeleton } from "@/app/components";
 import { Flex, Grid } from "@radix-ui/themes";
 import { Metadata } from "next";
+import dynamic from "next/dynamic";
+
+const IssueSummary = dynamic(() => import("@/app/IssueSummary"), {
+  ssr: false,
+  loading: () => <Skeleton height="5rem" />,
+});
+const LatestIssues = dynamic(() => import("@/app/LatestIssues"), {
+  ssr: false,
+  loading: () => <Skeleton height="25rem" />,
+});
+const IssueChart = dynamic(() => import("@/app/IssueChart"), {
+  ssr: false,
+  loading: () => <Skeleton height="18rem" />,
+});
 
 export default async function Home({
   searchParams,
