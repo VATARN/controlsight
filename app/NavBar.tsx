@@ -27,13 +27,18 @@ const NavBar = () => {
     <nav className="border-b mb-5 px-5 py-3">
       <Container>
         <Flex justify="between" align="center">
-          <Flex align="center" gap="3">
-            <Link href="/">
+          <Link href="/">
+            <Flex align="center" gap="1">
               <Image src={Logo} alt="logo" className="h-10 w-10" />
-            </Link>
+              <Text size="2" weight="medium">
+                Control Sight
+              </Text>
+            </Flex>
+          </Link>
+          <Flex align="center" gap="5">
             <NavbarLinks />
+            <AuthenticationStatus />
           </Flex>
-          <AuthenticationStatus />
         </Flex>
       </Container>
     </nav>

@@ -15,7 +15,7 @@ const session = await getServerSession(authOptions)
     const validation = editIssueSchema.safeParse(body);
     if(!validation.success) return NextResponse.json(validation.error.format(), {status: 400});
 
-    const {title, description, assignedToUserId} = body;
+    const {title, description, assignedToUserId, status} = body;
 
     if(assignedToUserId){
 const user = await prisma.user.findUnique({
@@ -35,7 +35,8 @@ const user = await prisma.user.findUnique({
         data: {
             title,
             description,
-            assignedToUserId
+            assignedToUserId,
+            status
         }
     });
 

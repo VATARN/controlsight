@@ -21,7 +21,6 @@ const fetchUser = cache((issueId: number) =>
 
 const IssueDetail = async ({ params }: Props) => {
   const session = await getServerSession(authOptions);
-
   if (typeof params.id !== "string") notFound();
 
   const issue = await fetchUser(parseInt(params.id));
@@ -31,17 +30,15 @@ const IssueDetail = async ({ params }: Props) => {
   return (
     <Grid columns={{ initial: "1", sm: "5" }} gap="5">
       <Box className="md:col-span-4">
-        <IssueDetails issue={issue} />
+        <IssueDetails issue={issue} disable={session} />
       </Box>
-      {session && (
-        <Box>
-          <Flex direction="column" gap="4">
-            <AssigneeSelect issue={issue} />
-            <EditIssueButton issueId={issue.id} />
-            <DeleteIssueButton issueId={issue.id} />
-          </Flex>
-        </Box>
-      )}
+      <Box>
+        <Flex direction="column" gap="4">
+          <AssigneeSelect issue={issue} disable={session} />
+          <EditIssueButton issueId={issue.id} disable={session} />
+          <DeleteIssueButton issueId={issue.id} disable={session} />
+        </Flex>
+      </Box>
     </Grid>
   );
 };

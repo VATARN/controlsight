@@ -5,8 +5,15 @@ import { AlertDialog, Button, Flex } from "@radix-ui/themes";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { Session } from "next-auth";
 
-const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
+const DeleteIssueButton = ({
+  issueId,
+  disable,
+}: {
+  issueId: number;
+  disable: Session | null;
+}) => {
   const router = useRouter();
   const [error, setError] = useState<boolean>(false);
   const [deleting, setDeleting] = useState<boolean>(false);
@@ -27,7 +34,7 @@ const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
     <>
       <AlertDialog.Root>
         <AlertDialog.Trigger>
-          <Button color="red" disabled={deleting}>
+          <Button color="red" disabled={deleting || disable ? false : true}>
             <Flex align="center" gap="1">
               <TrashIcon />
               Delete Issue
