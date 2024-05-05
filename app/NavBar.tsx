@@ -79,7 +79,7 @@ const AuthenticationStatus = () => {
 
   if (status === "unauthenticated")
     return (
-      <Link className="nav-link" href="/api/auth/signin">
+      <Link className="nav-link" href="/api/auth/signin/callbackUrl=/">
         Log in
       </Link>
     );
@@ -105,7 +105,10 @@ const AuthenticationStatus = () => {
               <Text size="2">{session.user!.email}</Text>
             </DropdownMenu.Label>
             <DropdownMenu.Item className="mt-2 text-center">
-              <Link className="w-full text-center" href="/api/auth/signout">
+              <Link
+                className="w-full text-center"
+                href="/api/auth/signout?callbackUrl=/"
+              >
                 Log out
               </Link>
             </DropdownMenu.Item>
