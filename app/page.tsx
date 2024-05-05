@@ -3,6 +3,7 @@ import { Skeleton } from "@/app/components";
 import { Flex, Grid } from "@radix-ui/themes";
 import { Metadata } from "next";
 import dynamic from "next/dynamic";
+import { getDatabase } from "./utlities";
 
 const IssueSummary = dynamic(() => import("@/app/IssueSummary"), {
   ssr: false,
@@ -22,11 +23,9 @@ export default async function Home({
 }: {
   searchParams: { page: string };
 }) {
-  const open = await prisma.issue.count({ where: { status: "OPEN" } });
-  const inprogress = await prisma.issue.count({
-    where: { status: "IN_PROGRESS" },
-  });
-  const done = await prisma.issue.count({ where: { status: "DONE" } });
+  const open = (await getDatabase()).open;
+  const inprogress = (await getDatabase()).inprogress;
+  const done = (await getDatabase()).done;
 
   return (
     <Grid columns={{ initial: "1", md: "2" }} gap="5">
