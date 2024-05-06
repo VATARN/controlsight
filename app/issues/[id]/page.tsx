@@ -32,9 +32,11 @@ const IssueDetail = async ({ params }: Props) => {
     <Grid columns={{ initial: "1", sm: "5" }} gap="5">
       <Box className="md:col-span-4">
         <IssueDetails issue={issue} disable={session} />
-        <div className="mt-4">
-          <AddCommentButton issue={issue} disable={session} />
-        </div>
+        {session && (
+          <div className="mt-4">
+            <AddCommentButton issue={issue} disable={session} />
+          </div>
+        )}
       </Box>
       <Box>
         <Flex direction="column" gap="4">

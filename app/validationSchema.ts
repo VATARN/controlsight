@@ -7,8 +7,8 @@ export const issueSchema = z.object({
 
 export const commentSchema = z.object({
     text: z.string().min(1, 'Comment is required!').max(65535, 'Comment is too long!'),
-    issueId: z.number().int(),
-    userId: z.string().max(255).optional().nullable(),
+    issueId: z.number(),
+    userId: z.string().max(255),
 });
 
 

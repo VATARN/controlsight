@@ -2,9 +2,12 @@
 import { Session } from "next-auth";
 import { ChatBubbleIcon } from "@radix-ui/react-icons";
 import { Box, Button, Flex, TextArea } from "@radix-ui/themes";
-import { Issue } from "@prisma/client";
-import { useState } from "react";
-import { set } from "zod";
+import { Issue, User } from "@prisma/client";
+import { useEffect, useState } from "react";
+import { ButtonSpinner } from "@/app/components";
+import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const AddCommentButton = ({
   issue,
@@ -14,10 +17,40 @@ const AddCommentButton = ({
   disable: Session | null;
 }) => {
   const [commentText, setCommentText] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [userId, setUserId] = useState<string>("");
+  const router = useRouter();
 
-  const handleSumbit = () => {
-    console.log("Comment added: ", commentText);
-    setCommentText("");
+  useEffect(() => {
+    fetchUserID();
+  }, []);
+
+  const handleSumbit = async () => {
+    try {
+      if (commentText === "") {
+        toast.error("Comment is required!");
+        return;
+      }
+      setSubmitting(true);
+      await axios.post(`/api/issues/${issue.id}/comment`, {
+        text: commentText,
+        issueId: issue.id,
+        userId: userId,
+      });
+      setCommentText("");
+      toast.success("Comment added successfully!");
+      router.refresh();
+      setSubmitting(false);
+    } catch (error) {
+      setSubmitting(false);
+      toast.error("Failed to add comment! Please try again.");
+    }
+  };
+
+  const fetchUserID = async () => {
+    const res = await axios.get<User[]>("/api/users");
+    const user = res.data.filter((user) => user.email === disable?.user!.email);
+    setUserId(user[0].id);
   };
 
   return (
@@ -28,19 +61,21 @@ const AddCommentButton = ({
             placeholder="Add a new comment"
             radius="large"
             size="3"
-            disabled={disable ? false : true}
+            disabled={submitting}
             onChange={(e) => {
               setCommentText(e.target.value);
             }}
           />
         </Box>
-        <Button disabled={disable ? false : true} onClick={handleSumbit}>
+        <Button disabled={submitting} onClick={handleSumbit}>
           <Flex align="center" gap="1">
             <ChatBubbleIcon />
             Add
+            {submitting && <ButtonSpinner />}
           </Flex>
         </Button>
       </Flex>
+      <Toaster />
     </>
   );
 };

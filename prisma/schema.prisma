@@ -30,8 +30,8 @@ model Comment {
   id        Int      @id @default(autoincrement())
   text      String
   issueId   Int
-  issue     Issue    @relation(fields: [issueId], references: [id])
-  userId    String?  @db.VarChar(255)
+  issue     Issue?   @relation(fields: [issueId], references: [id])
+  userId    String   @db.VarChar(255)
   user      User?    @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
 }
