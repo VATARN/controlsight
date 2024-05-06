@@ -2,7 +2,7 @@
 import Link from "next/link";
 import Logo from "@/public/logo.webp";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import classNames from "classnames";
 import { useSession } from "next-auth/react";
 import Skeleton from "@/app/components/skeleton";
@@ -16,13 +16,6 @@ import {
 } from "@radix-ui/themes";
 
 const NavBar = () => {
-  const currentPath = usePathname();
-
-  const links = [
-    { href: "/", label: "Dashboard" },
-    { href: "/issues/list", label: "Issues" },
-  ];
-
   return (
     <nav className="border-b mb-5 px-5 py-3">
       <Container>
@@ -47,7 +40,7 @@ const NavBar = () => {
 
 const NavbarLinks = () => {
   const currentPath = usePathname();
-
+  const router = useRouter();
   const links = [
     { href: "/", label: "Dashboard" },
     { href: "/issues/list", label: "Issues" },
@@ -58,6 +51,9 @@ const NavbarLinks = () => {
       {links.map(({ href, label }) => (
         <li key={href}>
           <Link
+            onClick={() => {
+              router.refresh();
+            }}
             href={href}
             className={classNames({
               "nav-link": true,
