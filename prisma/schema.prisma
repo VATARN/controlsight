@@ -15,14 +15,25 @@ datasource db {
 }
 
 model Issue {
-  id               Int      @id @default(autoincrement())
-  title            String   @db.VarChar(255)
-  description      String   @db.Text
-  status           Status   @default(OPEN)
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
-  assignedToUserId String?  @db.VarChar(255)
-  assignedToUser   User?    @relation(fields: [assignedToUserId], references: [id])
+  id               Int       @id @default(autoincrement())
+  title            String    @db.VarChar(255)
+  description      String    @db.Text
+  status           Status    @default(OPEN)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  assignedToUserId String?   @db.VarChar(255)
+  assignedToUser   User?     @relation(fields: [assignedToUserId], references: [id])
+  comments         Comment[]
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  text      String
+  issueId   Int
+  issue     Issue    @relation(fields: [issueId], references: [id])
+  userId    String?  @db.VarChar(255)
+  user      User?    @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
 }
 
 enum Status {
@@ -70,6 +81,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   Issue         Issue[]
+  Comment       Comment[]
 
   @@map("users")
 }
