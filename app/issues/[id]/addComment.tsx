@@ -1,5 +1,5 @@
 "use client";
-import { Session } from "next-auth";
+
 import { ChatBubbleIcon } from "@radix-ui/react-icons";
 import { Box, Button, Flex, TextArea } from "@radix-ui/themes";
 import { Issue, User } from "@prisma/client";
@@ -9,21 +9,16 @@ import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
-const AddCommentButton = ({
+const AddComment = ({
   issue,
-  disable,
+  userId,
 }: {
   issue: Issue;
-  disable: Session | null;
+  userId: string | null | undefined;
 }) => {
   const [commentText, setCommentText] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [userId, setUserId] = useState<string>("");
   const router = useRouter();
-
-  useEffect(() => {
-    fetchUserID();
-  }, []);
 
   const handleSumbit = async () => {
     try {
@@ -47,12 +42,6 @@ const AddCommentButton = ({
     }
   };
 
-  const fetchUserID = async () => {
-    const res = await axios.get<User[]>("/api/users");
-    const user = res.data.filter((user) => user.email === disable?.user!.email);
-    setUserId(user[0].id);
-  };
-
   return (
     <>
       <Flex align="center" gap="2" justify="end">
@@ -60,6 +49,7 @@ const AddCommentButton = ({
           <TextArea
             placeholder="Add a new comment"
             radius="large"
+            value={commentText}
             size="3"
             disabled={submitting}
             onChange={(e) => {
@@ -80,4 +70,4 @@ const AddCommentButton = ({
   );
 };
 
-export default AddCommentButton;
+export default AddComment;

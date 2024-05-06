@@ -8,16 +8,6 @@ import {
 import { Button, Flex, Text } from "@radix-ui/themes";
 import { useRouter, useSearchParams } from "next/navigation";
 
-// const RoundButton = styled(Button, {
-//   width: 35, // Make buttons round
-//   height: 35,
-//   borderRadius: "50%",
-//   display: "flex",
-//   alignItems: "center",
-//   justifyContent: "center",
-//   fontSize: "14px",
-// });
-
 interface Props {
   itemCount: number;
   pageSize: number;

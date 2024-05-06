@@ -8,7 +8,7 @@ import authOptions from "@/app/api/auth/[...nextauth]/authOptions";
 import { getServerSession } from "next-auth";
 import AssigneeSelect from "./assigneeSelect";
 import { cache } from "react";
-import AddCommentButton from "./addCommentButton";
+import CommentSection from "./commentSection";
 
 interface Props {
   params: { id: string };
@@ -32,11 +32,7 @@ const IssueDetail = async ({ params }: Props) => {
     <Grid columns={{ initial: "1", sm: "5" }} gap="5">
       <Box className="md:col-span-4">
         <IssueDetails issue={issue} disable={session} />
-        {session && (
-          <div className="mt-4">
-            <AddCommentButton issue={issue} disable={session} />
-          </div>
-        )}
+        <CommentSection issue={issue} session={session} />
       </Box>
       <Box>
         <Flex direction="column" gap="4">

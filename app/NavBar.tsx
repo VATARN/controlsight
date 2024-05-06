@@ -23,9 +23,14 @@ const NavBar = () => {
           <Link href="/">
             <Flex align="center" gap="1">
               <Image src={Logo} alt="logo" className="h-10 w-10" />
-              <Text size="2" weight="medium">
-                Control Sight
-              </Text>
+              <Flex direction="column" align="center">
+                <Text size="2" weight="medium">
+                  Control
+                </Text>
+                <Text size="2" weight="medium">
+                  Sight
+                </Text>
+              </Flex>
             </Flex>
           </Link>
           <Flex align="center" gap="5">

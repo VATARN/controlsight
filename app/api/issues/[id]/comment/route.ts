@@ -4,6 +4,19 @@ import { getServerSession } from "next-auth";
 import { commentSchema } from "@/app/validationSchema";
 import authOptions from "@/app/api/auth/[...nextauth]/authOptions";
 
+export const GET = async (request: NextRequest,{params}: {params: {id: string}}) => {
+ const comments = await prisma.comment.findMany({
+      where: { issueId: parseInt(params.id)
+      },
+      include: { user: true },
+      orderBy: { createdAt: "desc" },
+    });
+
+    return NextResponse.json(comments);
+};
+
+
+
 export const POST = async (request: NextRequest) => {
     const session = await getServerSession(authOptions)
     if(!session)
