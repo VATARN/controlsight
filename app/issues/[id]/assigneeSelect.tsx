@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { Session } from "next-auth";
+import { useRouter } from "next/navigation";
 
 const AssigneeSelect = ({
   issue,
@@ -14,6 +15,7 @@ const AssigneeSelect = ({
   issue: Issue;
   disable: Session | null;
 }) => {
+  const router = useRouter();
   const {
     data: users,
     error,
@@ -29,6 +31,10 @@ const AssigneeSelect = ({
     axios
       .patch<Issue>(`/api/issues/${issue.id}`, {
         assignedToUserId: userId === "none" ? null : userId,
+      })
+      .then(() => {
+        toast.success("Status updated successfully!");
+        router.refresh();
       })
       .catch(() => toast.error("Failed to assign user! Please try again."));
   };

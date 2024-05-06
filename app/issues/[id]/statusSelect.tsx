@@ -3,6 +3,7 @@ import { Issue } from "@prisma/client";
 import { Flex, Select } from "@radix-ui/themes";
 import axios from "axios";
 import { Session } from "next-auth";
+import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
 
 const StatusSelect = ({
@@ -12,6 +13,7 @@ const StatusSelect = ({
   issue: Issue;
   disable: Session | null;
 }) => {
+  const router = useRouter();
   const statuses: { label: string; value: string }[] = [
     { label: "Open", value: "OPEN" },
     { label: "In Progess", value: "IN_PROGRESS" },
@@ -22,6 +24,10 @@ const StatusSelect = ({
     axios
       .patch<Issue>(`/api/issues/${issue.id}`, {
         status: status,
+      })
+      .then(() => {
+        toast.success("Status updated successfully!");
+        router.refresh();
       })
       .catch(() =>
         toast.error("Failed to update the status! Please try again.")
