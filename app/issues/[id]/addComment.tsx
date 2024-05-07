@@ -44,8 +44,8 @@ const AddComment = ({
 
   return (
     <>
-      <Flex align="center" gap="2" justify="end">
-        <Box maxWidth="70rem" maxHeight="5rem">
+      <Flex align="center" gap="2" direction="column">
+        <Box width="100%">
           <TextArea
             placeholder="Add a new comment"
             radius="large"
@@ -57,13 +57,17 @@ const AddComment = ({
             }}
           />
         </Box>
-        <Button disabled={submitting} onClick={handleSumbit}>
-          <Flex align="center" gap="1">
-            <ChatBubbleIcon />
-            Add
-            {submitting && <ButtonSpinner />}
+        <Box width="100%">
+          <Flex justify="end">
+            <Button disabled={submitting} onClick={handleSumbit}>
+              <Flex align="center" gap="1">
+                <ChatBubbleIcon />
+                Add Comment
+                {submitting && <ButtonSpinner />}
+              </Flex>
+            </Button>
           </Flex>
-        </Button>
+        </Box>
       </Flex>
       <Toaster />
     </>

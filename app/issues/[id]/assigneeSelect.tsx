@@ -1,5 +1,5 @@
 "use client";
-import { Skeleton } from "@/app/components";
+import { ButtonSpinner, Skeleton } from "@/app/components";
 import { Issue, User } from "@prisma/client";
 import { Select } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
@@ -51,6 +51,7 @@ const AssigneeSelect = ({
           <Select.Trigger placeholder="Assign" />
           <Select.Content>
             <Select.Group>
+              {isLoading && <ButtonSpinner />}
               <Select.Label>Suggestions</Select.Label>
               <Select.Item value="none">Unassigned</Select.Item>
               {users?.map((user) => (

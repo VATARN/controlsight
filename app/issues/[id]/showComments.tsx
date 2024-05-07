@@ -23,7 +23,7 @@ const ShowComments = ({ comments }: { comments: CommentswithUser[] }) => {
     createdAt: string
   ) => {
     return (
-      <Box maxWidth="50rem" width="100%">
+      <Box width="100%">
         <Card>
           <Flex gap="3" align="center">
             <Avatar size="2" src={image} radius="full" fallback="T" />
@@ -51,18 +51,31 @@ const ShowComments = ({ comments }: { comments: CommentswithUser[] }) => {
   };
 
   return (
-    <Flex direction="column">
-      {comments.map((comment) => (
-        <div key={comment.id} className="mt-2">
-          {renderComment(
-            comment.text,
-            comment.user?.name,
-            comment.user.image,
-            comment.createdAt
+    <Card>
+      <Flex direction="column">
+        <Text size="2" weight="bold">
+          Comments
+        </Text>
+        <Box width="100%">
+          {comments.length !== 0 ? (
+            comments.map((comment) => (
+              <div key={comment.id} className="mt-2">
+                {renderComment(
+                  comment.text,
+                  comment.user?.name,
+                  comment.user.image,
+                  comment.createdAt
+                )}
+              </div>
+            ))
+          ) : (
+            <Text size="2" color="gray">
+              No comments yet!
+            </Text>
           )}
-        </div>
-      ))}
-    </Flex>
+        </Box>
+      </Flex>
+    </Card>
   );
 };
 
